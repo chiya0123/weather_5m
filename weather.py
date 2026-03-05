@@ -1,0 +1,25 @@
+import requests
+import csv
+from datetime import datetime
+import os
+
+MY_API_KEY=os.getenv("WEATHER_API_KEY")
+
+city_name="Seoul"
+url=f"https://api.openweathermap.org/data/2.5/weather?q={city_name}&appid={MY_API_KEY}"
+url+="&units=metric"
+
+weather = result["weather"][0]["main"]
+temp = result["main"]["temp"]
+humidity = result["main"]["humidity"]
+
+current_time=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+csv_exist=os.path.exists("weather.csv")
+header=["current_time","temp","humidity","weather"]
+with open("weather.csv","a") as f:
+    writer=csv.writer(f)
+    if not csv_exist:
+        writer.writerow(header)
+    writer.writerow([current_time,temp,humidity,weather])
+print("날씨 저장 완료")
