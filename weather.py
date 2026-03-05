@@ -8,6 +8,8 @@ MY_API_KEY=os.getenv("WEATHER_API_KEY")
 city_name="Seoul"
 url=f"https://api.openweathermap.org/data/2.5/weather?q={city_name}&appid={MY_API_KEY}"
 url+="&units=metric"
+response = requests.get(url)
+result = response.json()
 
 weather = result["weather"][0]["main"]
 temp = result["main"]["temp"]
